@@ -58,7 +58,7 @@ class BeritaController extends Controller
             'nik' => Auth::user()->nik,
         ]);
 
-        return redirect('admin/berita')->with('success', 'Data berhasil ditambahkan');
+        return redirect('admin/berita')->with('success', 'Data berita berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -81,7 +81,7 @@ class BeritaController extends Controller
             'deskripsi' => $request->deskripsi,
         ]);
 
-        return redirect('admin/berita')->with('success', 'Data berhasil diupdate');
+        return redirect('admin/berita')->with('success', 'Data berita berhasil diperbarui');
     }
 
 
@@ -113,7 +113,7 @@ class BeritaController extends Controller
             $berita->delete();
         }
 
-        return redirect('admin/berita')->with('success', 'Data berhasil dihapus');
+        return redirect('admin/berita')->with('success', 'Data berita berhasil dihapus');
     }
 
     // UPLOAD IMAGE SUMMERNOTE

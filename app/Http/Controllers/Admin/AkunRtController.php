@@ -59,12 +59,12 @@ class AkunRtController extends Controller
         )
         ->get();
 
-    return view('admin.MasterAkun.akun_rt', compact('dataakunrt', 'id_rtrw', 'data'));
+    return view('admin.master_akun.akun_rt', compact('dataakunrt', 'id_rtrw', 'data'));
 }
 
     public function create()
     {
-        return view('admin.MasterAkun.akun_rt');
+        return view('admin.master_akun.akun_rt');
     }
 
     public function store(Request $request)

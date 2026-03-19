@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('id_surat');
             $table->primary('id_surat');
             $table->string('nama_surat');
-            $table->string('image');
             $table->timestamps();
         });
     }

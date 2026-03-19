@@ -59,14 +59,14 @@ class AkunRwController extends Controller
         ->get();
 
     // Kirim ke view
-    return view('admin.MasterAkun.akun_rw', compact('dataakunrw', 'id_rtrw', 'data'));
+    return view('admin.master_akun.akun_rw', compact('dataakunrw', 'id_rtrw', 'data'));
 }
 
 
     public function create()
     {
         //
-        return view('admin.MasterAkun.akun_rw');
+        return view('admin.master_akun.akun_rw');
     }
 
     public function store(Request $request)

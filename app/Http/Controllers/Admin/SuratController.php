@@ -54,7 +54,7 @@ class SuratController extends Controller
             'nama_surat' => $request->nama_surat,
         ]);
 
-        return redirect()->route('mastersurat.index')->with('success', 'Data Surat Berhasil Disimpan');
+        return redirect()->route('mastersurat.index')->with('success', 'Data surat berhasil ditambahkan');
     }
 
     public function update(Request $request, $id_surat)
@@ -71,7 +71,7 @@ class SuratController extends Controller
 
         $surat->update($data);
 
-        return redirect()->route('mastersurat.index')->with('success', 'Data Surat Berhasil Diperbarui');
+        return redirect()->route('mastersurat.index')->with('success', 'Data surat berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -79,6 +79,6 @@ class SuratController extends Controller
         $surat = master_surat::findOrFail($id);
         $surat->delete();
 
-        return redirect()->route('mastersurat.index')->with('success', 'Data Surat Berhasil Dihapus');
+        return redirect()->route('mastersurat.index')->with('success', 'Data surat berhasil dihapus');
     }
 }

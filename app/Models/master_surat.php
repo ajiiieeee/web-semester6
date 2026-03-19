@@ -15,10 +15,10 @@ class master_surat extends Model
     protected $table = 'master_surat';
 
     // Kolom yang boleh diisi
-    protected $fillable = ['id_surat', 'nama_surat', 'image'];
+    protected $fillable = ['id_surat', 'nama_surat'];
 
     // Nonaktifkan timestamps (jika tidak digunakan)
-    public $timestamps = false;
+    public $timestamps = true;
 
     // Relasi ke master_pengajuan
     public function pengajuan()
