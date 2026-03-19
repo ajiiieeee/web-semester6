@@ -13,6 +13,11 @@
     <div class="section-header">
         <h1>Penduduk</h1>
     </div>
+    @if(session('success'))
+    <div id="alertPopup" class="alert alert-success alert-floating">
+        {{ session('success') }}
+    </div>
+    @endif
 
     <div class="section-body">
         <div class="row">
@@ -58,7 +63,6 @@
                                         <th>NO KK</th>
                                         <th>NIK</th>
                                         <th>Nama Lengkap</th>
-                                        <th>Tempat Lahir</th>
                                         <th>Tanggal Lahir</th>
                                         <th>Status Keluarga</th>
                                         <th>Aksi</th>
@@ -71,29 +75,48 @@
                                         <td>{{ $a->no_kk }}</td>
                                         <td>{{ $a->nik }}</td>
                                         <td>{{ $a->nama_lengkap }}</td>
-                                        <td>{{ $a->tempat_lahir }}</td>
                                         <td>{{ $a->tanggal_lahir }}</td>
                                         <td>{{ $a->status_keluarga }}</td>
                                         <td>
                                             <!-- Tombol Edit -->
                                             <a href="#" 
                                                class="btn btn-warning btn-sm btn-edit"
-                                               data-bs-toggle="modal"
-                                               data-bs-target="#exampleModal"
-                                               data-nik="{{ $a->nik }}"
-                                               data-nama_lengkap="{{ $a->nama_lengkap }}"
-                                               data-tempat_lahir="{{ $a->tempat_lahir }}"
-                                               data-tanggal_lahir="{{ $a->tanggal_lahir }}">
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                data-nik="{{ $a->nik }}"
+                                                data-nama_lengkap="{{ $a->nama_lengkap }}"
+                                                data-tempat_lahir="{{ $a->tempat_lahir }}"
+                                                data-tanggal_lahir="{{ $a->tanggal_lahir }}"
+                                                data-jenis_kelamin="{{ $a->jenis_kelamin }}"
+                                                data-agama="{{ $a->agama }}"
+                                                data-pendidikan="{{ $a->pendidikan }}"
+                                                data-pekerjaan="{{ $a->pekerjaan }}"
+                                                data-golongan_darah="{{ $a->golongan_darah }}"
+                                                data-status_perkawinan="{{ $a->status_perkawinan }}"
+                                                data-tanggal_perkawinan="{{ $a->tanggal_perkawinan }}"
+                                                data-status_keluarga="{{ $a->status_keluarga }}"
+                                                data-kewarganegaraan="{{ $a->kewarganegaraan }}"
+                                                data-no_paspor="{{ $a->no_paspor }}"
+                                                data-no_kitap="{{ $a->no_kitap }}"
+                                                data-nama_ayah="{{ $a->nama_ayah }}"
+                                                data-nama_ibu="{{ $a->nama_ibu }}">
                                                <i class="fas fa-pencil-alt"></i>
                                             </a>
 
                                             <!-- Tombol Hapus -->
-                                            <a href="{{ route('penduduk.delete',$a->nik) }}" 
-                                               data-nama_lengkap="{{$a->nama_lengkap}}" 
-                                               class="btn btn-danger btn-sm" 
-                                               title="Hapus Data">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <form id="formHapus{{ $a->nik }}" action="{{ route('penduduk.delete', $a->nik) }}" 
+                                                method="POST" 
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm btndeletependuduk"
+                                                    data-id="{{ $a->nik }}"
+                                                    data-nama_lengkap="{{ $a->nama_lengkap }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -141,7 +164,7 @@
                     <div class="mb-3">
                         <label class="form-label">Jenis Kelamin</label>
                         <select id="jenis_kelamin" class="form-control selectric" name="jenis_kelamin" required>
-                            <option selected></option>
+                            <option> -- Pilih Kelamin -- </option>
                             <option>Laki - Laki</option>
                             <option>Perempuan</option>
                         </select>
@@ -162,7 +185,7 @@
                         <div class="col">
                             <label class="form-label">Agama</label>
                             <select class="form-control selectric" name="agama" required>
-                                <option selected></option>
+                                <option> -- Pilih Agama -- </option>
                                 <option>ISLAM</option>
                                 <option>HINDU</option>
                                 <option>KRISTEN</option>
@@ -173,7 +196,7 @@
                         <div class="col">
                             <label class="form-label">Pendidikan</label>
                             <select class="form-control selectric" name="pendidikan" required>
-                                <option selected></option>
+                                <option> -- Pilih Pendidikan -- </option>
                                 <option>TIDAK / BELUM SEKOLAH</option>
                                 <option>BELUM TAMAT SD / SEDERAJAT</option>
                                 <option>TAMAT SD / SEDERAJAT</option>
@@ -197,7 +220,7 @@
                     <div class="col">
                         <label class="form-label">Golongan Darah</label>
                         <select id="golongan_darah" class="form-control selectric" name="golongan_darah"  required>
-                            <option selected></option>
+                            <option> -- Pilih Golongan Darah -- </option>
                             <option>A</option>
                             <option>B</option>
                             <option>AB</option>
@@ -206,12 +229,12 @@
                     </div>
                     <div class="col">
                         <label class="form-label">Status Perkawinan</label>
-                        <select id="status_perkawinan " class="form-control selectric" name="status_perkawinan"  required>
-                            <option selected></option>
-                            <option>BELUM KAWIN</option>
-                            <option>KAWIN</option>
-                            <option>CERAI HIDUP</option>
-                            <option>CERAI MATI</option>
+                        <select id="status_perkawinan" class="form-control selectric" name="status_perkawinan"  required>
+                            <option> -- Pilih Status -- </option>
+                            <option value="BELUM KAWIN">BELUM KAWIN</option>
+                            <option value="KAWIN">KAWIN</option>
+                            <option value="CERAI HIDP">CERAI HIDUP</option>
+                            <option value="CERAI MATI">CERAI MATI</option>
                           </select>
                     </div>
                 </div>
@@ -224,7 +247,7 @@
                     <div class="col">
                         <label class="form-label">Status Keluarga</label>
                         <select id="status_keluarga" class="form-control selectric" name="status_keluarga"  required>
-                            <option selected></option>
+                            <option> -- Pilih Status -- </option>
                             <option>KEPALA KELUARGA </option>
                             <option>SUAMI</option>
                             <option>ISTRI</option>
@@ -239,9 +262,9 @@
                     <div class="col">
                         <label class="form-label">Kewarganegaraan</label>
                         <select id="kewarganegaraan" class="form-control selectric" name="kewarganegaraan"  required>
-                            <option selected></option>
-                            <option>WNI</option>
-                            <option>WNA</option>
+                            <option> -- Pilih Kewarganegaraan -- </option>
+                            <option value="WNI" >WNI</option>
+                            <option value="WNA" >WNA</option>
                           </select>
                     </div>
                 </div>
@@ -278,10 +301,8 @@
 </div>
 
 <!-- SCRIPTS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-selectric/1.13.0/jquery.selectric.min.js" integrity="sha512-1JkUu6uJnlI2XnXYH/XR/3JCEFFwVwCKwBpH0xNGiFqN2b2f+zjX0F6yKxufskqkHf7aQYxqKXwlm70mTDq1cA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ asset('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ asset('assets/js/page/modules-sweetalert.js') }}"></script>
 <script>
     $(document).ready(function() {
         // Inisialisasi Selectric untuk semua dropdown

@@ -120,7 +120,7 @@ Route::middleware(['auth', 'role:1'])->prefix('admin')->group(function () {
     Route::get('master_penduduk', [PendudukController::class, 'index']);
     Route::post('master_penduduk/masuk', [PendudukController::class, 'masuk']);
     Route::put('master_penduduk/{nik}', [PendudukController::class, 'update']);
-    Route::get('master_penduduk/{nik}', [PendudukController::class, 'delete'])->name('penduduk.delete');
+    Route::delete('master_penduduk/{nik}', [PendudukController::class, 'delete'])->name('penduduk.delete');
     Route::get('master_penduduk/cetak-draft-kk/{no_kk}', [GeneratePDFController::class, 'draftKK'])->name('draftkk');
 
     // MASTER AKUN RW

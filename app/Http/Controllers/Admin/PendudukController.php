@@ -19,7 +19,7 @@ class PendudukController extends Controller
     }
 
     $query->orderBy('no_kk')
-          ->orderByRaw("FIELD(status_keluarga, 'Kepala Keluarga', 'Istri', 'Anak')");
+          ->orderByRaw("FIELD(status_keluarga, 'Kepala Keluarga', 'Suami', 'Istri', 'Anak', 'Menantu', 'Orang Tua', 'Mertua', 'Pembantu', 'Famili lain')");
 
     $master_penduduk = $query->paginate(10); // atau sesuaikan jumlah per halaman
 
@@ -139,6 +139,6 @@ class PendudukController extends Controller
     $penduduk->delete();
 
     // Redirect dengan membawa parameter nokk
-    return redirect()->to('admin/master_penduduk?nokk=' . $no_kk)->with('success', 'Data berhasil dihapus.');
+    return redirect()->to('admin/master_penduduk?nokk=' . $no_kk)->with('success', 'Data penduduk berhasil dihapus.');
 }
 }
