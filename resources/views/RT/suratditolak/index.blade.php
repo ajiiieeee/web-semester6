@@ -1,25 +1,35 @@
 @extends('rt.layout.main')
 @section('title', 'Surat Ditolak')
-@section('konten')
+@section('content')
+<section class="section">
+    <div class="section-header">
+        <h1>Surat Ditolak</h1>
+    </div>
+    @if(session('success'))
+    <div id="alertPopup" class="alert alert-success alert-floating">
+        {{ session('success') }}
+    </div>
+    @endif
 
-<div class="container-scroller">
-    <div class="table-container">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="text-start mb-4">Surat Ditolak</h2>
-        </div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <form id="searchForm" class="d-flex" action="{{ route('rt.suratditolak.index') }}" method="get">
+                            <input class="form-control me-2" type="search" name="katakunci" id="searchInput"
+                                   value="{{ Request::get('katakunci') }}" placeholder="Cari..." autocomplete="off">
+                            <button class="btn btn-outline-primary">
+                                Cari
+                            </button>
+                        </form>
+                    </div>
 
-        {{-- Form Search --}}
-        <div class="pb-3">
-            <form class="d-flex" method="get" action="{{ route('rt.suratditolak.index') }}">
-                <input class="form-control me-1" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Cari" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Cari</button>
-            </form>
-        </div>
-
-        {{-- Display Data --}}
-        <div class="table-responsive">
-            <table class="display expandable-table dataTable no-footer" style="width: 100%">
-                <thead class="table-danger">
+        {{-- Tabel Data --}}
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
                     <tr>
                         <th>No</th>
                         <th>NIK</th>

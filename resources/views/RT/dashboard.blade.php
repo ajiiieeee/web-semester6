@@ -1,96 +1,113 @@
 @extends('rt.layout.main')
 @section('title', 'Dashboard')
-@section('konten')
-<link href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-<style>
-    body, h1, h2, h3, h4, h5, h6, p, .card, .btn, .text-muted {
-        font-family: 'Poppins', sans-serif !important;
-    }
-</style>
+@section('content')
 
-<div class="container-scroller">
-    <div class="row">
-        <div class="col-md-12 grid-margin">
-            <div class="row">
-                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                  <h3 class="font-weight-bold">Selamat Datang Kepala RT {{ $rt }} RW {{ $rw }}</h3>
+<section class="section">
+  <div class="section-header d-flex justify-content-between align-items-center">
+    <h1>Dashboard</h1>
+  </div>
 
-                </div>
-            </div>
+  {{-- TEXT SELAMAT DATANG --}}
+  <div class="mb-4 border-bottom pb-2">
+    <h4 class="mb-1">
+      Selamat Datang, {{ auth()->user()->name ?? 'Admin Desa' }}
+    </h4>
+    <p class="text-muted mb-0">
+      Kelola data penduduk, kartu keluarga, dan layanan desa melalui dashboard ini.
+    </p>
+  </div>
+
+  <div class="row">
+
+    {{-- KIRI: CHART --}}
+    <div class="col-lg-7">
+      <div class="card">
+        <div class="card-header">
+          <h4>Statistik Penduduk</h4>
         </div>
+        <div class="card-body">
+          <div style="height:300px;">
+            <canvas id="chartPenduduk"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="row d-flex">
-        <!-- PIE CHART -->
-        <div class="col-md-4 d-flex">
-            <div class="card w-100" style="padding: 10px;">
-                <div class="card-body">
-                    <h5 class="card-title">Statistik Penduduk</h5>
-                    <p class="card-description">Pria dan Wanita</p>
-                    <canvas id="genderChart" style="height:200px;"></canvas>
-                    <div class="mt-3">
-                        <span class="badge bg-primary">Pria</span>
-                        <span class="badge bg-danger">Wanita</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    {{-- KANAN: 6 CARD --}}
+    <div class="col-lg-5">
+      <div class="row">
 
-        <!-- 6 CARD -->
-        <div class="col-md-8 d-flex flex-wrap">
-            @php
-                $cards = [
-                    ['icon' => 'mdi-account-group', 'value' => $jumlahPenduduk, 'label' => 'Jumlah Penduduk'],
-                    ['icon' => 'mdi-card-account-details', 'value' => $jumlahKK, 'label' => 'Jumlah KK'],
-                    ['icon' => 'mdi-gender-female', 'value' => $jumlahWanita, 'label' => 'Penduduk Wanita', 'color' => '#e91e63'],
-                    ['icon' => 'mdi-gender-male', 'value' => $jumlahLaki, 'label' => 'Penduduk Pria', 'color' => '#2196f3'],
-                    ['icon' => 'mdi-email-send-outline', 'value' => $jumlahSuratMasuk, 'label' => 'Total Pengajuan Surat', 'color' => '#00c292'],
-                    ['icon' => 'mdi-close-circle-outline', 'value' => $jumlahSuratDitolak, 'label' => 'Surat Ditolak', 'color' => '#e74c3c']
-                ];
-            @endphp
-
-            @foreach($cards as $card)
-            <div class="col-md-6 mb-3 d-flex align-items-stretch">
-                <div class="card w-100 text-center p-3">
-                    <div class="mb-2">
-                        <i class="mdi {{ $card['icon'] }}" style="font-size: 24px; color: {{ $card['color'] ?? '#4b49ac' }};"></i>
-                    </div>
-                    <h4 class="fw-bold mb-0">{{ $card['value'] }}</h4>
-                    <small class="text-muted">{{ $card['label'] }}</small>
-                </div>
+        {{-- Penduduk --}}
+        {{-- <div class="col-6 mb-3">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-primary">
+              <i class="fas fa-users"></i>
             </div>
-            @endforeach
-        </div>
+            <div class="card-wrap">
+              <div class="card-header"><h4>Penduduk</h4></div>
+              <div class="card-body">{{ $jumlahPenduduk }}</div>
+            </div>
+          </div>
+        </div> --}}
+
+        {{-- KK --}}
+        {{-- <div class="col-6 mb-3">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-info">
+              <i class="fas fa-home"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header"><h4>KK</h4></div>
+              <div class="card-body">{{ $jumlahKK }}</div>
+            </div>
+          </div>
+        </div> --}}
+
+        {{-- Pria --}}
+        {{-- <div class="col-6 mb-3">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-success">
+              <i class="fas fa-male"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header"><h4>Pria</h4></div>
+              <div class="card-body">{{ $jumlahLaki }}</div>
+            </div>
+          </div>
+        </div> --}}
+
+        {{-- Wanita --}}
+        {{-- <div class="col-6 mb-3">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-danger">
+              <i class="fas fa-female"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header"><h4>Wanita</h4></div>
+              <div class="card-body">{{ $jumlahPerempuan }}</div>
+            </div>
+          </div>
+        </div> --}}
+
+        {{-- RT --}}
+        {{-- <div class="col-6 mb-3">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-warning">
+              <i class="fas fa-map"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header"><h4>RT</h4></div>
+              <div class="card-body">{{ $jumlahRT }}</div>
+            </div>
+          </div>
+        </div> --}}
+
+      </div>
     </div>
-</div>
 
-<!-- Library Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </div>
 
-<!-- Script Chart Gender -->
-<script>
-    const ctx = document.getElementById('genderChart').getContext('2d');
-    const genderChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Pria', 'Wanita'],
-            datasets: [{
-                data: [{{ $jumlahLaki }}, {{ $jumlahWanita }}],
-                backgroundColor: ['#36A2EB', '#FF6384'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'bottom'
-                }
-            }
-        }
-    });
-</script>
+</section>
+
 @endsection

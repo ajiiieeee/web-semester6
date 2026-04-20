@@ -58,20 +58,20 @@ Route::middleware(['auth', 'role:3'])->prefix('rt')->group(function () {
     Route::get('/dashboard-rt', [DashboardRTController::class, 'index'])->name('dashboard.rt');
 
     // SURAT MASUK
-    Route::get('/surat-masuk', [SuratMasukRTController::class, 'index'])->name('rt.suratmasuk.index');
-    Route::post('/surat-masuk/setujui/{id_pengajuan}', [SuratMasukRTController::class, 'setujui'])->name('rt.suratmasuk.setuju');
-    Route::post('/surat-masuk/tolak/{id_pengajuan}', [SuratMasukRTController::class, 'tolak'])->name('rt.suratmasuk.tolak');
+    Route::get('/suratmasuk-rt', [SuratMasukRTController::class, 'index'])->name('rt.suratmasuk.index');
+    Route::post('/suratmasuk-rt/setujui/{id_pengajuan}', [SuratMasukRTController::class, 'setujui'])->name('rt.suratmasuk.setuju');
+    Route::post('/suratmasuk-rt/tolak/{id_pengajuan}', [SuratMasukRTController::class, 'tolak'])->name('rt.suratmasuk.tolak');
 
     // SURAT SELESAI
-    Route::get('/surat-selesai', [SuratSelesaiRTController::class, 'index'])->name('rt.suratselesai.index');
-    Route::get('/surat-selesai/{id}', [SuratSelesaiRTController::class, 'show'])->name('rt.suratselesai.show');
-    Route::delete('/surat-selesai/{id}', [SuratSelesaiRTController::class, 'destroy'])->name('rt.suratselesai.destroy');
+    Route::get('/suratselesai-rt', [SuratSelesaiRTController::class, 'index'])->name('rt.suratselesai.index');
+    Route::get('/suratselesai-rt/{id}', [SuratSelesaiRTController::class, 'show'])->name('rt.suratselesai.show');
+    Route::delete('/suratselesai-rt/{id}', [SuratSelesaiRTController::class, 'destroy'])->name('rt.suratselesai.destroy');
 
     // SURAT DITOLAK
-    Route::get('/surat-ditolak', [SuratDitolakRTController::class, 'index'])->name('rt.suratditolak.index');
-    Route::get('/surat-ditolak/{id}', [SuratDitolakRTController::class, 'show'])->name('rt.suratditolak.show');
-    Route::post('/surat-ditolak/alasan', [SuratDitolakRTController::class, 'alasanPenolakan'])->name('rt.suratditolak.alasan');
-    Route::delete('/rt/surat-ditolak/{id}', [SuratDitolakRTController::class, 'destroy'])->name('rt.suratditolak.destroy');
+    Route::get('/suratditolak-rt', [SuratDitolakRTController::class, 'index'])->name('rt.suratditolak.index');
+    Route::get('/suratditolak-rt/{id}', [SuratDitolakRTController::class, 'show'])->name('rt.suratditolak.show');
+    Route::post('/suratditolak-rt/alasan', [SuratDitolakRTController::class, 'alasanPenolakan'])->name('rt.suratditolak.alasan');
+    Route::delete('/suratditolak-rt/{id}', [SuratDitolakRTController::class, 'destroy'])->name('rt.suratditolak.destroy');
 
 });
 
@@ -82,15 +82,15 @@ Route::middleware(['auth', 'role:2'])->prefix('rw')->group(function () {
     Route::get('/dashboard-rw', [DashboardRWController::class, 'index'])->name('rw.dashboard');
 
     // SURAT MASUK
-    Route::get('/surat-masuk', [SuratMasukRWController::class, 'index'])->name('rw.suratmasuk.index');
-    Route::get('/surat-masuk/{id_pengajuan}', [SuratMasukRWController::class, 'show'])->name('rw.suratmasuk.show');
-    Route::post('/surat-masuk/setujui/{id_pengajuan}', [SuratMasukRWController::class, 'setujui'])->name('rw.suratmasuk.setujui');
-    Route::delete('/surat-masuk/{id_pengajuan}', [SuratMasukRWController::class, 'destroy'])->name('rw.suratmasuk.destroy');
+    Route::get('/suratmasuk-rw', [SuratMasukRWController::class, 'index'])->name('rw.suratmasuk.index');
+    Route::get('/suratmasuk-rw/{id_pengajuan}', [SuratMasukRWController::class, 'show'])->name('rw.suratmasuk.show');
+    Route::post('/suratmasuk-rw/setujui/{id_pengajuan}', [SuratMasukRWController::class, 'setujui'])->name('rw.suratmasuk.setujui');
+    Route::delete('/suratmasuk-rw/{id_pengajuan}', [SuratMasukRWController::class, 'destroy'])->name('rw.suratmasuk.destroy');
 
     // SURAT SELESAI
-    Route::get('/surat-selesai', [SuratSelesaiRWController::class, 'index'])->name('rw.suratselesai.index');
-    Route::get('/surat-selesai/{id_pengajuan}', [SuratSelesaiRWController::class, 'show'])->name('rw.suratselesai.show');
-    Route::delete('/surat-selesai/{id}', [SuratSelesaiRWController::class, 'destroy'])->name('rw.suratselesai.destroy');
+    Route::get('/suratselesai-rw', [SuratSelesaiRWController::class, 'index'])->name('rw.suratselesai.index');
+    Route::get('/suratselesai-rw/{id_pengajuan}', [SuratSelesaiRWController::class, 'show'])->name('rw.suratselesai.show');
+    Route::delete('/suratselesai-rw/{id}', [SuratSelesaiRWController::class, 'destroy'])->name('rw.suratselesai.destroy');
 });
 
 

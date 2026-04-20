@@ -1,55 +1,40 @@
-<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-
-<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo Desa" class="logo-img">
-          <div class="logo-text ms-3">
-              <h4 class="mb-0">Desa Kalipait</h4>
-              <small>Kabupaten Banyuwangi</small>
-          </div>
-        </a>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
+<div class="navbar-bg"></div>
+ <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+          </ul>
+      
         </form>
-      </div>
-      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-        <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item dropdown">
-            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-            </a>
-          </li>
-          <li class="nav-item d-flex align-items-center mr-3">
-  @auth
-    <span class="font-weight-bold">
-      Halo, {{ session('nama', 'Nama tidak ditemukan') }}
-    </span>
-  @endauth
-</li>
+        <ul class="navbar-nav navbar-right">
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+            {{-- <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1"> --}}
+            <div class="d-sm-none d-lg-inline-block">
+    Hi, {{ session('nama') ?? 'User' }}
+</div>
 
-          <li class="nav-item dropdown nav-settings d-none d-lg-flex">
-            <a class="nav-link dropdown-toggle no-caret" id="settingsDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                <i class="icon-ellipsis"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="settingsDropdown">
-                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
+            <div class="dropdown-menu dropdown-menu-right">
+             
+              <a href="{{ url('/profile') }}" class="dropdown-item has-icon">
+                <i class="far fa-user"></i> Profile
+              </a>
+              {{-- <a href="features-activities.html" class="dropdown-item has-icon">
+                <i class="fas fa-bolt"></i> Activities
+              </a>
+              <a href="features-settings.html" class="dropdown-item has-icon">
+                <i class="fas fa-cog"></i> Settings
+              </a> --}}
+              <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item has-icon text-danger"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                  <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+              </form>
             </div>
-        </li>
-
+          </li>
         </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-          <span class="icon-menu"></span>
-        </button>
-      </div>
-    </nav>
-    <!-- jQuery (Wajib untuk Bootstrap 4 dropdown) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Popper.js (Untuk positioning dropdown) -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      </nav>

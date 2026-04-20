@@ -1,97 +1,106 @@
-<!DOCTYPE html>
-<html lang="id">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Default Title')</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @include('RT.layout.style')
+  <title>@yield('title', 'Default title')</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
-        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <style>
-      body {
-        font-family: 'Poppins', sans-serif;
-      }
-      .table-container {
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-      .btn {
-        border-radius: 5px;
-      }
-      thead th {
-        text-align: center;
-      }
-      tbody td {
-        text-align: center;
-        vertical-align: middle;
-      }
-      .sidebar-fixed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 250px; /* sesuaikan dengan lebar sidebar kamu */
-      overflow-y: auto;
-      /* sesuaikan dengan warna sidebar */
-      z-index: 1000;
-      padding-top: 70px; /* sesuaikan dengan tinggi navbar jika ada */
-      
-  }
-
-  .content-wrapper {
-      margin-left: 250px; /* biar kontennya nggak ketindih sidebar */
-      padding: 20px;
-  }
-
-  .navbar {
-    box-shadow: none !important;
-}
-
-  .no-caret::after {
-    display: none !important;
-}
+  {{-- General CSS Files --}}
+  <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/modules/summernote/summernote-bs4.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/modules/jquery-selectric/selectric.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}" >
+  {{-- CSS Libraries (per halaman) --}}
+  @stack('css-lib')
 
 
-    </style>
 
+  {{-- Template CSS --}}
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 
+  {{-- Slot tambahan di <head> jika perlu --}}
+  @stack('head')
+
+  {{-- Google Analytics: aktif hanya di production --}}
+  @env('production')
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.ga.id', 'UA-94034622-3') }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ config('services.ga.id', 'UA-94034622-3') }}');
+    </script>
+  @endenv
 </head>
+
 <body>
+  <div id="app">
+    <div class="main-wrapper">
 
-    <!-- Navbar -->
-    @include('admin.layout.navbar')
+      @include('rt.layout.alerts')
+      
+      {{-- Navbar --}}
+      @include('rt.layout.navbar')
 
-   <div class="container-fluid page-body-wrapper">
-            <!-- Sidebar -->
-            @include('rt.layout.sidebar')
+      {{-- Sidebar --}}
+      @include('rt.layout.sidebar')
 
-            <!-- Main Content -->
-            <div class="content-wrapper">
-                @yield('konten')
-            </div>
+      {{-- Main Content --}}
+      <div class="main-content">
+        @yield('content')
+      </div>
+
+      {{-- Footer (opsional) --}}
+      {{-- @includeWhen(View::exists('layouts.footer'), 'layouts.footer') --}}
+
     </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-    .swal2-icon {
-        margin-top: 30px !important; /* Atur sesuai kebutuhan */
-    }
+  </div>
+
+  {{-- General JS Scripts --}}
+  <script src="{{ asset('assets/modules/jquery.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/popper.js') }}"></script>
+  <script src="{{ asset('assets/modules/tooltip.js') }}"></script>
+  <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/moment.min.js') }}"></script>
+  <script src="{{ asset('assets/js/stisla.js') }}"></script>
+
+  <script src="{{ asset('assets/modules/simple-weather/jquery.simpleWeather.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/chart.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/jqvmap/dist/jquery.vmap.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
+  <script src="{{ asset('assets/modules/summernote/summernote-bs4.js') }}"></script>
+  <script src="{{ asset('assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/jquery-selectric/jquery.selectric.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}" ></script>
+  
+  {{-- JS Libraries (per halaman) --}}
+  @stack('js-lib')
+
+  {{-- Page Specific JS --}}
+  @stack('page-js')
+
+  {{-- Template JS --}}
+  <script src="{{ asset('assets/js/scripts.js') }}"></script>
+  <script src="{{ asset('assets/js/custom.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 </style>
-  @include('admin.layout.alerts')
-
-    </body>
+  @stack('scripts')
+</body>
 </html>

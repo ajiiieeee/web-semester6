@@ -1,35 +1,36 @@
 @extends('rw.layout.main')
-@section('title', 'Surat Selesai RW')
-@section('konten')
+@section('title', 'Surat Selesai')
+@section('content')
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
+<section class="section">
+    <div class="section-header">
+        <h1>Surat Selesai </h1>
+    </div>
+    @if(session('success'))
+    <div id="alertPopup" class="alert alert-success alert-floating">
+        {{ session('success') }}
+    </div>
+    @endif
 
-<div class="container-scroller">
-    <div class="table-container">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="text-start mb-4">Surat Selesai RW</h2>
-        </div>
-
-        {{-- Notifikasi --}}
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-
-        {{-- Form Pencarian --}}
-        <div class="pb-3">
-            <form class="d-flex" method="GET" action="{{ route('rw.suratselesai.index') }}">
-                <input class="form-control me-1" type="search" name="katakunci" value="{{ request('katakunci') }}" placeholder="Cari" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Cari</button>
-            </form>
-        </div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <form id="searchForm" class="d-flex" action="{{ route('rw.suratselesai.index') }}" method="get">
+                            <input class="form-control me-2" type="search" name="katakunci" id="searchInput"
+                                   value="{{ Request::get('katakunci') }}" placeholder="Cari..." autocomplete="off">
+                            <button class="btn btn-outline-primary">
+                                Cari
+                            </button>
+                        </form>
+                    </div>
 
         {{-- Tabel Data --}}
-        <div class="table-responsive">
-            <table class="display expandable-table dataTable no-footer" style="width: 100%">
-                <thead class="table-primary text-center">
+         <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                <thead>
                     <tr>
                         <th>No</th>
                         <th>NIK</th>
@@ -129,41 +130,5 @@
     @csrf
     @method('DELETE')
 </form>
-
-{{-- Script SweetAlert2 --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    document.querySelectorAll('.btn-hapus').forEach(button => {
-        button.addEventListener('click', function () {
-            const id = this.dataset.id;
-            const nama = this.dataset.nama;
-
-            Swal.fire({
-                title: `<div class="text-danger">Hapus Data?</div>`,
-                html: `
-                    <div class="card p-3">
-                        <div class="fw-bold text-dark mb-2">Pengajuan Surat: ${nama}</div>
-                        <div class="text-muted">Data akan dihapus secara permanen.</div>
-                    </div>
-                `,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, Hapus',
-                cancelButtonText: 'Batal',
-                confirmButtonColor: '#e3342f',
-                cancelButtonColor: '#6c757d',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const form = document.getElementById('formHapus');
-                    form.action = `/rw/surat-selesai/${id}`;
-                    form.submit();
-                }
-            });
-        });
-    });
-</script>
 
 @endsection
