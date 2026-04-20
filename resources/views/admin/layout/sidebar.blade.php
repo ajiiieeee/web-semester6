@@ -11,7 +11,7 @@
     <!-- Logo kecil -->
     <div class="sidebar-brand sidebar-brand-sm collapsed-logo">
       <a href="{{ url('/admin/dashboard') }}">
-        {{-- <img src="{{ asset('/storage/foto/logotomat.png') }}" alt="Logo Kecil" style="height:35px; margin-left:5px;"> --}}
+        <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo Kecil"    style="height:35px; margin-left:5px;">
       </a>
     </div>
 

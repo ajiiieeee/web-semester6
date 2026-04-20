@@ -128,7 +128,7 @@ Route::middleware(['auth', 'role:1'])->prefix('admin')->group(function () {
     Route::get('/akunrw', [AkunRwController::class, 'index'])->name('akunrw');
     Route::post('akunrw/store', [AkunRwController::class, 'store'])->name('akunrw.store');
     Route::put('akunrw/update/{id}', [AkunRwController::class, 'update'])->name('akunrw.update');
-    Route::delete('akunrw/{id}', [AkunRwController::class, 'destroy'])->name('akun.destroy');
+    Route::delete('akunrw/{id}', [AkunRwController::class, 'destroy'])->name('akunrw.delete');
     Route::get('get-nama-rw', [AkunRwController::class, 'getNamaRw']);
 
     // MASTER AKUN RT
@@ -136,7 +136,7 @@ Route::middleware(['auth', 'role:1'])->prefix('admin')->group(function () {
     Route::get('/akunrt', [AkunRtController::class, 'index'])->name('akunrt');
     Route::post('akunrt/store', [AkunRtController::class, 'store'])->name('akun.store');
     Route::put('akunrt/update/{id}', [AkunRtController::class, 'update'])->name('akun.update');
-    Route::get('akunrt/{id_rtrw}', [AkunRtController::class, 'destroy'])->name('akunrt.destroy');
+    Route::get('akunrt/{id_rtrw}', [AkunRtController::class, 'destroy'])->name('akunrt.delete');
     Route::get('get-nama-by-nik', [AkunRtController::class, 'getNamaByNik']); 
 
     // LANDINGPAGE

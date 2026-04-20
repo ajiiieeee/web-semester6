@@ -9,7 +9,7 @@ $(document).ready(function () {
 
         swal({
             title: "Yakin ingin menghapus?",
-            text: `Data surat "${nama}" akan dihapus!`,
+            text: `Data Kartu Keluarga atas nama "${nama}" akan dihapus!`,
             icon: "warning",
             buttons: true,
             dangerMode: true,

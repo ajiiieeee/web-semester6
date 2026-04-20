@@ -1,59 +1,80 @@
 $(document).ready(function () {
-    // Event ketika nama dipilih
-    $("#nama").change(function () {
-        var selectedOption = $(this).find("option:selected");
-        var nik = selectedOption.data("nik"); // Ambil nilai NIK dari data-nik
-        var rw = selectedOption.data("rw"); // Ambil nilai RW dari data-rw
+    // =========================
+    // SEARCH AUTO SUBMIT
+    // =========================
+    const searchInput = document.getElementById("searchInput");
+    const searchForm = document.getElementById("searchForm");
 
-        if (nik) {
-            // Isi kolom NIK, dan RW dengan nilai yang sesuai
-            $("#nik").val(nik);
-            $("#rw").val(rw);
-        } else {
-            // Kosongkan kolom jika tidak ada data
-            $("#nik").val("");
-            $("#rw").val("");
+    if (searchInput) {
+        let timeout = null;
+        searchInput.addEventListener("input", function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                searchForm.submit();
+            }, 500);
+        });
+    }
+
+    let modal = $("#modal");
+
+    // =========================
+    // INIT SELECT2 SAAT MODAL DIBUKA
+    // =========================
+    modal.on("shown.bs.modal", function () {
+        if ($("#nama").hasClass("select2-hidden-accessible")) {
+            $("#nama").select2("destroy");
+        }
+
+        $("#nama").select2({
+            placeholder: "Pilih Nama Ketua RW",
+            width: "100%",
+            dropdownParent: modal,
+            minimumResultsForSearch: 0,
+        });
+
+        // =========================
+        // RESTORE OLD VALUE (VALIDASI GAGAL)
+        // =========================
+        let oldNama = $("#nama").data("old");
+        if (oldNama) {
+            $("#nama").val(oldNama).trigger("change");
         }
     });
-});
 
-$(".delete").click(function (e) {
-    e.preventDefault();
-    const form = $(this).closest("form");
-
-    Swal.fire({
-        title: "Yakin ingin menghapus?",
-        text: "Data di atas akan dihapus secara permanen!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ya, Hapus!",
-        cancelButtonText: "Batal",
-        didOpen: () => {
-            const icon = document.querySelector(".swal2-icon");
-            if (icon) {
-                icon.style.marginTop = "30px";
-            }
-        },
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form.submit();
-        }
+    // =========================
+    // AUTO FOCUS SEARCH SELECT2
+    // =========================
+    $(document).on("select2:open", function () {
+        setTimeout(() => {
+            document.querySelector(".select2-search__field")?.focus();
+        }, 0);
     });
-});
 
+    // =========================
+    // AUTO ISI NIK & RW
+    // =========================
+    $(document).on("change", "#nama", function () {
+        let selected = $(this).find(":selected");
+        $("#nik").val(selected.data("nik") || "");
+        $("#rw").val(selected.data("rw") || "");
+    });
 
-$(document).ready(function () {
-    // Tombol Tambah Data
-    $("#btn-add").click(function () {
+    // =========================
+    // BTN TAMBAH
+    // =========================
+    $("#btnTambah").click(function () {
         $("#modalTitle").text("Tambah Akun Ketua RW");
         $("#modalForm").find('[name="_method"]').remove();
         $("#modalForm")[0].reset();
-        $("#modal").modal("show");
+
+        $("#nama").val(null).trigger("change");
+
+        modal.modal("show");
     });
 
-    // Tombol Edit
+    // =========================
+    // BTN EDIT
+    // =========================
     $(".btn-edit").click(function () {
         var id_rtrw = $(this).data("id_rtrw");
         var nik = $(this).data("nik");
@@ -64,47 +85,53 @@ $(document).ready(function () {
 
         $("#modalTitle").text("Edit Akun Ketua RW");
         $("#modalForm").attr("action", updateUrl);
+
         $("#modalForm").find('[name="_method"]').remove();
         $("#modalForm").append(
-            '<input type="hidden" name="_method" value="PUT">'
+            '<input type="hidden" name="_method" value="PUT">',
         );
 
         $("#id_rtrw").val(id_rtrw);
         $("#nik").val(nik);
-        $("#nama").val(nama);
         $("#no_hp").val(no_hp);
         $("#rw").val(rw);
 
-        $("#modal").modal("show");
+        modal.modal("show");
+
+        setTimeout(() => {
+            $("#nama").val(nama).trigger("change");
+        }, 200);
     });
 
-    // Auto isi NIK dan RW dari Pilihan Nama
-    $("#nama").change(function () {
-        var selectedOption = $(this).find("option:selected");
-        var nik = selectedOption.data("nik") || "";
-        var rw = selectedOption.data("rw") || "";
-        $("#nik").val(nik);
-        $("#rw").val(rw);
-    });
+    // =========================
+    // DELETE CONFIRM
+    // =========================
+    $(document).on("click", ".btndeleteAkunrw", function (e) {
+        e.preventDefault();
 
-});
+        const id = $(this).data("id_rtrw");
+        const nama = $(this).data("nama");
 
-$(document).ready(function () {
-    $(".select-nama").select2({
-        placeholder: "Pilih Nama",
-        allowClear: false,
-        width: "100%",
-        dropdownParent: $("#modal"),
-    });
+        swal({
+            title: "Yakin ingin menghapus?",
+            text: `Data Ketua RW atas nama "${nama}" akan dihapus!`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                swal({
+                    title: "Berhasil!",
+                    text: "Data berhasil dihapus",
+                    icon: "success",
+                    buttons: false,
+                    timer: 3000,
+                });
 
-    $("#nama").on("change", function () {
-        let selected = $(this).find(":selected");
-        $("#nik").val(selected.data("nik") || "");
-        $("#rw").val(selected.data("rw") || "");
-    });
-
-    // Autofokus saat modal dibuka
-    $("#modal").on("shown.bs.modal", function () {
-        $("#nama").select2("open");
+                setTimeout(() => {
+                    $("#formHapus" + id).submit();
+                }, 500);
+            }
+        });
     });
 });

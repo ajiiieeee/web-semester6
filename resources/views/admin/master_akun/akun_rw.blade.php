@@ -1,37 +1,55 @@
 @extends('admin.layout.main')
-@section('konten')
+@php
+function showError($field) {
+    if (isset($errors) && $errors->has($field)) {
+        return '<small class="text-danger">'.$errors->first($field).'</small>';
+    }
+    return '';
+}
+@endphp
+@section('content')
 @section('title', 'Akun RW')
-<!doctype html>
-<html lang="en">
+<section class="section">
+    <div class="section-header">
+        <h1>Akun Rukun Warga</h1>
+    </div>
+    @if(session('success'))
+    <div id="alertPopup" class="alert alert-success alert-floating">
+        {{ session('success') }}
+    </div>
+    @endif
 
-<body class="bg-light">
-    <div class="container-scroller">
-        <div class="table-container">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="text-start mb-4">Akun Rukun Warga</h2>
-            </div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
 
-            {{-- form search --}}
-            <div class="pb-3">
-                   <form id="searchForm" class="d-flex" action="{{ route('akunrw') }}" method="get">
-                    <input class="form-control me-1" type="search" name="katakunci"
-                    id="searchInput"
-                    value="{{ Request::get('katakunci') }}"
-                    placeholder="Cari" aria-label="Search"
-                    autocomplete="off">
-                    <button class="btn btn-outline-primary" type="submit">Cari</button>
-                </form>
-            </div>
+                <div class="card">
 
-            {{-- tambah data --}}
-            <div class="pb-3 text-end">
-                <button class="btn btn-primary" id="btn-add">+ Tambah Data</button>
-            </div>
+                    <!-- CARD HEADER -->
+                    <div class="card-header">
+                      <div class="d-flex justify-content-between w-100">
+                    {{-- form search --}}
+                        <form id="searchForm" class="d-flex" action="{{ route('akunrw') }}" method="get">
+                            <input class="form-control me-1" type="search" name="katakunci"
+                            id="searchInput"
+                            value="{{ Request::get('katakunci') }}"
+                            placeholder="Cari" aria-label="Search"
+                            autocomplete="off">
+                            <button class="btn btn-outline-primary" type="submit">Cari</button>
+                        </form>
 
-            {{-- display data --}}
-            <div class="table-responsive">
-                <table class="display expandable-table dataTable no-footer" style="width: 100%">
-                    <thead class="table-primary">
+                        <!-- KANAN : TOMBOL TAMBAH -->
+                        <button id="btnTambah" class="btn btn-primary">
+                            + Tambah Data
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- CARD BODY -->
+                    <div class="card-body pt-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="activityTable">
+                                <thead>
                         <tr>
                             <th>No</th>
                             <th>NIK</th>
@@ -60,15 +78,15 @@
                                             data-rw="{{ $a->rw }}"
                                             data-url="{{ route('akunrw.update', $a->id_rtrw) }}"
                                         >
-                                            <i class="bi bi-pencil-square"></i>
+                                        <i class="fas fa-pencil-alt"></i>
                                         </button>
 
-                                        <form action="{{ route('akun.destroy', $a->id_rtrw) }}" method="POST" class="d-inline delete-form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm delete" title="Hapus Data">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </button>
+                                        <form id="formHapus{{ $a->id_rtrw }}" style="display: inline" action="{{ route('akunrw.delete', $a->id_rtrw) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm btndeleteAkunrw" data-id_rtrw="{{ $a->id_rtrw }}" data-nama="{{ $a->nama }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
                                         </form>
 
                                     </td>
@@ -81,10 +99,11 @@
             <div class="mt-3">
                 {{ $dataakunrw->withQueryString()->links() }}
             </div>
+</section>
             
             {{-- modal --}}
             <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form id="modalForm" action="{{ route('akunrw.store') }}" method="POST">
                             @csrf
@@ -98,7 +117,7 @@
 
                                 <div class="mb-3">
                                     <label for="nama" class="form-label">Nama Ketua RW</label>
-                                    <select class="form-select select-nama" name="nama" id="nama" required>
+                                    <select data-old="{{ old('nama') }}" class="form-control select2 w-100 {{ $errors->has('nama') ? 'is-invalid' : '' }}" name="nama" id="nama" required>
                                         <option disabled selected value="">Pilih Nama</option>
                                         @foreach ($data as $value)
                                             <option 
@@ -109,21 +128,33 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <small class="text-danger">
+                                        {{ $errors->first('nama') }}
+                                    </small>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Nomor HP</label>
-                                    <input type="text" class="form-control" name="no_hp" id="no_hp" required>
+                                    <input type="text" class="form-control {{ $errors->has('no_hp') ? 'is-invalid' : '' }}" value="{{ old('no_hp') }}" name="no_hp" id="no_hp" required>
+                                    <small class="text-danger">
+                                        {{ $errors->first('no_hp') }}
+                                    </small>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">NIK</label>
-                                    <input type="text" class="form-control" name="nik" id="nik" readonly>
+                                    <input type="text" class="form-control {{ $errors->has('nik') ? 'is-invalid' : '' }}" value="{{ old('nik') }}" name="nik" id="nik" readonly>
+                                    <small class="text-danger">
+                                        {{ $errors->first('nik') }}
+                                    </small>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">RW</label>
-                                    <input type="text" class="form-control" name="rw" id="rw" required>
+                                    <input type="text" class="form-control {{ $errors->has('rw') ? 'is-invalid' : '' }}" value="{{ old('rw') }}" name="rw" id="rw" required>
+                                    <small class="text-danger">
+                                        {{ $errors->first('rw') }}
+                                    </small>
                                 </div>
                             </div>
 
@@ -138,52 +169,35 @@
 
             {{-- scripts --}}
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="{{ asset('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
+            <script src="{{ asset('assets/js/page/modules-sweetalert.js') }}"></script>
             <script src="{{ asset('js/rw.js') }}"></script>
-            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-            <!-- Select2 JS -->
-            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+            @if ($errors->any())
+            <script>
+                $(document).ready(function () {
+                    $("#modal").modal("show");
+                });
+            </script>
+            @endif
             <style>
-                .select2-container .select2-selection--single {
-                    height: 38px;
-                    padding: 6px 12px;
-                    border: 1px solid #ced4da;
-                    border-radius: 0.375rem;
+                .select2-container {
+                    width: 100% !important;
                 }
 
-                .select2-container--default .select2-selection--single .select2-selection__rendered {
-                    line-height: 24px;
-                }
-
-                .select2-container--default .select2-selection--single .select2-selection__arrow {
-                    height: 38px;
-                    right: 10px;
+                .select2-container {
+                    z-index: 9999 !important;
                 }
 
                 .select2-dropdown {
-                    z-index: 1056 !important; /* lebih tinggi dari modal */
+                    z-index: 9999 !important;
+                }
+                .select2-container--default.select2-container--focus .select2-selection,
+                .is-invalid + .select2 .select2-selection {
+                    border-color: red !important;
                 }
             </style>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById('searchInput');
-    const searchForm = document.getElementById('searchForm');
-
-    let timeout = null;
-    searchInput.addEventListener('input', function () {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            searchForm.submit();
-        }, 500); // Delay 500ms agar tidak submit terlalu sering
-    });
-});
-</script>
 
 
         </div>
     </div>
-
-</body>
-</html>
 @endsection

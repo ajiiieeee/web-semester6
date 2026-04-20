@@ -98,7 +98,7 @@ $(document).ready(function () {
 
         swal({
             title: "Yakin ingin menghapus?",
-            text: `Data surat "${nama}" akan dihapus!`,
+            text: `Data penduduk atas nama "${nama}" akan dihapus!`,
             icon: "warning",
             buttons: true,
             dangerMode: true,
