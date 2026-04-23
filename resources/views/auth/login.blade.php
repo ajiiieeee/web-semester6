@@ -11,7 +11,7 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: #f4f6f9;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -20,73 +20,69 @@
         }
 
         .login-card {
-            width: 380px;
-            padding: 35px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            color: white;
-            animation: fadeIn 0.8s ease-in-out;
+            width: 400px;
+            padding: 30px;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
-        h3 {
+        .header-login {
             text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-login h3 {
             font-weight: bold;
-            margin-bottom: 25px;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .header-login p {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 0;
         }
 
         .form-control {
-            border-radius: 10px;
-            border: none;
-            padding: 12px;
+            border-radius: 8px;
+            padding: 10px;
         }
 
         .input-group-text {
-            background: transparent;
-            border: none;
-            color: white;
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            background: #e9ecef;
+            border-radius: 8px 0 0 8px;
         }
 
         .btn-login {
-            background: #00c6ff;
+            background: #198754;
             border: none;
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 8px;
+            padding: 10px;
             font-weight: bold;
+            color: white;
             transition: 0.3s;
         }
 
         .btn-login:hover {
-            background: #0072ff;
-            transform: translateY(-2px);
+            background: #157347;
         }
 
         .alert {
-            border-radius: 10px;
             font-size: 14px;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            border-radius: 8px;
         }
 
         .footer-text {
             text-align: center;
             margin-top: 15px;
-            font-size: 13px;
-            opacity: 0.8;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .logo-desa {
+            width: 60px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -94,16 +90,22 @@
 
 <div class="login-card">
 
-    <h3><i class="bi bi-shield-lock"></i> Login Admin</h3>
+    <div class="header-login">
+        <!-- Logo (opsional) -->
+        <!-- <img src="/logo-desa.png" class="logo-desa"> -->
+
+        <h3>Login Sistem Desa</h3>
+        <p>Desa Kalipait</p>
+    </div>
 
     @if(session('success'))
-        <div class="alert alert-success text-dark" id="alert-success">
+        <div class="alert alert-success" id="alert-success">
             {{ session('success') }}
         </div>
     @endif
 
     @if(session('error'))
-        <div class="alert alert-danger text-dark" id="alert-error">
+        <div class="alert alert-danger" id="alert-error">
             {{ session('error') }}
         </div>
     @endif
@@ -121,17 +123,17 @@
         <div class="mb-3 input-group">
             <span class="input-group-text"><i class="bi bi-lock"></i></span>
             <input type="password" name="password" id="password" class="form-control" placeholder="Masukkan Password" required>
-            <span class="input-group-text" id="togglePassword">
+            <span class="input-group-text" id="togglePassword" style="cursor:pointer;">
                 <i class="bi bi-eye-slash"></i>
             </span>
         </div>
 
         <!-- Button -->
-        <button type="submit" class="btn btn-login w-100">Login</button>
+        <button type="submit" class="btn btn-login w-100">Masuk</button>
     </form>
 
     <div class="footer-text">
-        © 2026 Desa Kalipait
+        © 2026 Pemerintah Desa Kalipait
     </div>
 </div>
 

@@ -4,18 +4,22 @@
 @section('content')
 
 <section class="section">
-  <div class="section-header d-flex justify-content-between align-items-center">
-    <h1>Dashboard</h1>
+
+  {{-- HEADER --}}
+  <div class="section-header">
+    <h1>Selamat Datang, {{ auth()->user()->name ?? 'Admin Desa' }}</h1>
   </div>
 
-  {{-- TEXT SELAMAT DATANG --}}
-  <div class="mb-4 border-bottom pb-2">
-    <h4 class="mb-1">
-      Selamat Datang, {{ auth()->user()->name ?? 'Admin Desa' }}
-    </h4>
-    <p class="text-muted mb-0">
-      Kelola data penduduk, kartu keluarga, dan layanan desa melalui dashboard ini.
+  {{-- TEKS TAMBAHAN (DI BAWAH HEADER / CARD PUTIH) --}}
+  <div class="mb-4">
+    <p style="font-size: 14px; color: #444; line-height: 1.6;">
+      Sistem Informasi Desa Kalipait — Kelola data penduduk, kartu keluarga, 
+      dan layanan administrasi desa secara terintegrasi dan efisien.
     </p>
+
+    <small style="color: #555;">
+      {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
+    </small>
   </div>
 
   <div class="row">

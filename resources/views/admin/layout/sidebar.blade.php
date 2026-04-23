@@ -9,11 +9,13 @@
     </div>
 
     <!-- Logo kecil -->
-    <div class="sidebar-brand sidebar-brand-sm collapsed-logo">
-      <a href="{{ url('/admin/dashboard') }}">
-        <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo Kecil"    style="height:35px; margin-left:5px;">
-      </a>
-    </div>
+  <div class="sidebar-brand sidebar-brand-sm collapsed-logo">
+  <a href="{{ url('/admin/dashboard') }}">
+    <img src="{{ asset('assets/img/logo.png') }}" 
+         alt="Logo Kecil" 
+         style="height:35px; margin-left:5px;">
+  </a>
+</div>
 
     <ul class="sidebar-menu">
       <li><a href="{{ url('/admin/dashboard') }}" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
