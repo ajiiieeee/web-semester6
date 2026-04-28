@@ -89,11 +89,11 @@
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <button type="button"
-                                                        class="btn btn-danger btn-sm me-1 btnHapus"
-                                                        data-id="{{ $item->id }}">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
+                                            <button type="button"
+                                                    class="btn btn-danger btn-sm me-1 btnHapus"
+                                                    data-id="{{ $item->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
 
                                             </form>
 

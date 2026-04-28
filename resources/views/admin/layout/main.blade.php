@@ -78,6 +78,7 @@
   <script src="{{ asset('assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
   <script src="{{ asset('assets/modules/jquery-selectric/jquery.selectric.min.js') }}"></script>
   <script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   {{-- JS Libraries (per halaman) --}}
   @stack('js-lib')
