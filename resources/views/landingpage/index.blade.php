@@ -271,7 +271,7 @@
                             <div class="card-body-berita">
                                 <h5 class="card-title-berita">{{ $berita->judul }}</h5>
                                 <p class="card-text-berita">{{ Str::limit(strip_tags($berita->isi), 100, '...') }}</p>
-                                <a href="{{ route('landing_page.show', $berita->id_berita) }}" class="btn-berita" >Baca Selengkapnya</a>
+                                <a href="{{ route('landingpage.show', $berita->id_berita) }}" class="btn-berita" >Baca Selengkapnya</a>
                             </div>
                         </div>
                     @endforeach
@@ -308,7 +308,7 @@
                     <h4>Contact Us</h4>
                     <p>Email: desa.wonorejo@gmail.com</p>
                     <p>Phone: +62 857-4878-2437</p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126275.58843042006!2d114.2060889218844!3d-8.488476627450437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd3effd0234747f%3A0x3ef5ac1d39badfe2!2sKantor%20Desa%20Kalipait!5e0!3m2!1sid!2sid!4v1743259735533!5m2!1sid!2sid" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.228770078982!2d113.23631397358572!3d-8.078135280749327!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd65d1fd1baa563%3A0x598abe919624d868!2sKantor%20Desa%20Wonorejo!5e0!3m2!1sid!2sid!4v1777375400586!5m2!1sid!2sid" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
     
