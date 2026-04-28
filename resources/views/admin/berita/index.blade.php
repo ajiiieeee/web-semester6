@@ -48,11 +48,8 @@
 
                     {{-- CARD BODY --}}
                     <div class="card-body">
-
                         <div class="table-responsive">
-
                             <table class="table table-striped">
-
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -62,43 +59,44 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
-
                                     @php
                                         $i = $databerita->firstItem();
                                     @endphp
-
                                     @forelse ($databerita as $item)
-
                                     <tr>
-
                                         <td>
                                             {{ $i }}
                                         </td>
-
                                         <td style="width: 30%" >
                                             {{ $item->judul }}
                                         </td>
-
                                         <td>
+                                            @php
+                                                preg_match('/<img[^>]+src="([^">]+)"/', $item->deskripsi, $matches);
+                                                $img = $matches[1] ?? null;
 
-                                            <img src="{{ asset('storage/imageberita/'.$item->image) }}" class="border"
-                                                 style="width:200px; height:auto;">
+                                                // Fix URL kalau rusak (https: tanpa //)
+                                                if ($img && str_starts_with($img, 'https:') && !str_starts_with($img, 'https://')) {
+                                                    $img = str_replace('https:', 'http://', $img);
+                                                }
+                                            @endphp
+
+                                            @if($img)
+                                                <img src="{{ $img }}" style="width:150px; height:auto;" class="border">
+                                            @else
+                                                <span>Tidak ada gambar</span>
+                                            @endif
                                         </td>
-
                                         <td style="width: 30%" >
-
                                             @php
                                                 $words = explode(' ', strip_tags($item->deskripsi));
                                             @endphp
-
                                             @if(count($words) > 50)
                                                 {{ implode(' ', array_slice($words,0,50)) }}...
                                             @else
                                                 {{ $item->deskripsi }}
                                             @endif
-
                                         </td>
                                         {{-- AKSI --}}
                                         <td>
