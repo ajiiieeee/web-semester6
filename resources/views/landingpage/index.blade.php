@@ -20,8 +20,8 @@
     <div class="logo-container d-flex align-items-center">
         <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo Desa" class="logo-img">
         <div class="logo-text ms-3">
-            <h4 class="mb-0">Desa Kalipait</h4>
-            <small>Kabupaten Banyuwangi</small>
+            <h4 class="mb-0">Desa Wonorejo</h4>
+            <small>Kabupaten Lumajang</small>
         </div>
     </div>
     <button class="menu-toggle d-md-none" onclick="toggleMenu()">☰</button>
@@ -95,7 +95,7 @@
                         <div class="service">
                             <h1>Website</h1>
                             <p>
-                                Pusat informasi dan e-form Desa Kalipait
+                                Pusat informasi dan e-form Desa Wonorejo
                             </p>
                         </div>
                    </div>
@@ -200,7 +200,7 @@
     
     <section class="profile-section" id="profile-section">
         <h2>Perangkat Desa</h2>
-        <p>Perangkat Desa Kalipait periode tahun 2025–2029</p>
+        <p>Perangkat Desa Wonorejo periode tahun 2025–2029</p>
       
         {{-- Kepala Desa --}}
         <div class="kepala-desa">
@@ -226,7 +226,7 @@
           <div class="card">
             <img src="{{ asset('image/profile/abal.jpg') }}" alt="Bendahara">
             <h4>Abal Mudlofar,S.Pd</h4>
-            <p>Sekretaris Desa Kalipait</p>
+            <p>Sekretaris Desa Wonorejo</p>
           </div>
           <div class="card">
             <img src="{{ asset('image/profile/luluk.jpg') }}" alt="Pemerintahan">
@@ -260,7 +260,7 @@
         <div class="container-berita">
             <div class="berita-header text-center mb-5">
                 <h2 class="berita-heading">Berita Terkini</h2>
-                <p class="berita-subheading">Berita terbaru tentang Desa Kalipait dan informasi terkini untuk masyarakat.</p>
+                <p class="berita-subheading">Berita terbaru tentang Desa Wonorejo dan informasi terkini untuk masyarakat.</p>
             </div>
     
             @if($beritas->count() > 0)
@@ -306,8 +306,8 @@
     
                 <div class="col-lg-4">
                     <h4>Contact Us</h4>
-                    <p>Email: desa.kalipait@gmail.com</p>
-                    <p>Phone: +62 895-2643-2934</p>
+                    <p>Email: desa.wonorejo@gmail.com</p>
+                    <p>Phone: +62 857-4878-2437</p>
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126275.58843042006!2d114.2060889218844!3d-8.488476627450437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd3effd0234747f%3A0x3ef5ac1d39badfe2!2sKantor%20Desa%20Kalipait!5e0!3m2!1sid!2sid!4v1743259735533!5m2!1sid!2sid" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
@@ -315,7 +315,7 @@
             <div class="row mt-4">
                 <div class="col-lg-12 text-center">
                     <p class="copyright">
-                        © 2025 Desa Kalipait x About You. All rights reserved.
+                        © 2025 Desa Wonorejo x About You. All rights reserved.
                     </p>
                 </div>
             </div>

@@ -37,18 +37,18 @@ use App\Http\Controllers\LoginController;
 
 
 
-// // DASHBOARD
-// Route::get('/', [LandingpageController::class, 'tampil'])->name('website');
+// DASHBOARD
+Route::get('/', [LandingpageController::class, 'tampil'])->name('website');
 // Route::get('/', function () {
 //     return redirect()->route('rw.dashboard');
 // });
-Route::get('/', function () {
-    return redirect()->route('dashboard');
-});
+// Route::get('/', function () {
+//     return redirect()->route('dashboard');
+// });
 
 Route::get('/check-nama-nik', function () {
     return view('cekk');
-})->middleware('auth');  // Pastikan hanya yang login yang bisa mengakses
+})->middleware('auth'); 
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login'])->name('login.proses')->middleware('guest');

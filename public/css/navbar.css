@@ -1,0 +1,41 @@
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 0px; /* hilangkan jarak horizontal */
+    margin-left: 10px; /* opsional: beri sedikit padding kiri */
+}
+
+.logo-img {
+    height: 80px !important;
+    width: auto !important;
+    object-fit: contain;
+    margin-right: 8px;
+    margin-top: 6px !important;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.2;
+    margin-left: -60px !important;
+}
+
+
+.logo-text h4 {
+    font-size: 18px; /* p   erbesar teks */
+    font-weight: bold;
+    color: #000;
+    margin: 0;
+}
+
+.logo-text small {
+    font-size: 10px;
+    color: #555;
+    margin: 0;
+}
+.navbar-brand-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+}
