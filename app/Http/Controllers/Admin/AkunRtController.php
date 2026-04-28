@@ -113,16 +113,23 @@ class AkunRtController extends Controller
     public function update(Request $request, $id)
 {
     $request->validate([
-        'nama' => 'required',
-        'no_hp' => 'required',
-        'rt' => 'required',
-        'rw' => 'required'
+        'nik' => 'required|string|exists:master_penduduks,nik|max:17|unique:master_rt_rw,nik,' . $id . ',id_rtrw',
+        'nama' => 'required|string|max:255',
+        'no_hp' => 'required|string|max:15',
+        'rt' => 'required|string|max:5',
+        'rw' => 'required|string|max:5',
+    ], [
+        'nik.exists' => 'NIK belum terdaftar di data penduduk.',
+        'nik.unique' => 'NIK sudah digunakan sebagai Ketua RT / RW.',
+        'no_hp.max' => 'Panjang nomor HP maksimal 15 karakter',
+        'rt.max' => 'Panjang RT maksimal 3 karakter',
+        'rw.max' => 'Panjang RW maksimal 3 karakter',
     ]);
 
-    // Cek kombinasi RT dan RW (kecuali untuk data yang sedang di-edit)
+    // Validasi kombinasi RT & RW (kecuali data sendiri)
     $exists = master_rt::where('rt', $request->rt)
         ->where('rw', $request->rw)
-        ->where('id_rtrw', '!=', $id)  // Make sure you're comparing with the right field, id_rtrw
+        ->where('id_rtrw', '!=', $id)
         ->exists();
 
     if ($exists) {
@@ -131,15 +138,15 @@ class AkunRtController extends Controller
         ])->withInput();
     }
 
-    // Update the data based on the id_rtrw
     $dataakunrt = [
+        'nik' => $request->nik,
         'nama' => $request->nama,
         'no_hp' => $request->no_hp,
         'rt' => $request->rt,
         'rw' => $request->rw,
     ];
 
-    master_rt::where('id_rtrw', $id)->update($dataakunrt);  // Use id_rtrw to find the record
+    master_rt::where('id_rtrw', $id)->update($dataakunrt);
 
     return redirect()->route('akunrt')->with('success', 'Data Berhasil Diedit');
 }

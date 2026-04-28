@@ -121,14 +121,16 @@ class AkunRwController extends Controller
 
     public function update(Request $request, $id)
 {
-    $request->validate([
+     $request->validate([
+        'nik' => 'required|string|exists:master_penduduks,nik|max:17|unique:master_rt_rw,nik,' . $id . ',id_rtrw',
         'nama' => 'required|string|max:255',
-        'no_hp' => 'required|string|max:15|min_digits:10',
-        'rw' => 'required|string|max:3',
+        'no_hp' => 'required|string|max:15',
+        'rw' => 'required|string|max:5',
     ], [
-        'nama.required' => 'Nama wajib diisi.',
-        'no_hp.required' => 'Nomor HP wajib diisi.',
-        'rw.required' => 'RW wajib diisi.',
+        'nik.exists' => 'NIK belum terdaftar di data penduduk.',
+        'nik.unique' => 'NIK sudah digunakan sebagai Ketua RT / RW.',
+        'no_hp.max' => 'Panjang nomor HP maksimal 15 karakter',
+        'rw.max' => 'Panjang RW maksimal 3 karakter',
     ]);
 
     // Cek apakah RW sudah digunakan oleh Ketua RW lain

@@ -39,6 +39,12 @@ use App\Http\Controllers\LoginController;
 
 // DASHBOARD
 Route::get('/', [LandingpageController::class, 'tampil'])->name('website');
+// Route::get('/', function () {
+//     return redirect()->route('rw.dashboard');
+// });
+// Route::get('/', function () {
+//     return redirect()->route('dashboard');
+// });
 
 Route::get('/check-nama-nik', function () {
     return view('cekk');
@@ -134,9 +140,9 @@ Route::middleware(['auth', 'role:1'])->prefix('admin')->group(function () {
     // MASTER AKUN RT
     Route::get('akunrt/create', [AkunRtController::class, 'create']);
     Route::get('/akunrt', [AkunRtController::class, 'index'])->name('akunrt');
-    Route::post('akunrt/store', [AkunRtController::class, 'store'])->name('akun.store');
-    Route::put('akunrt/update/{id}', [AkunRtController::class, 'update'])->name('akun.update');
-    Route::get('akunrt/{id_rtrw}', [AkunRtController::class, 'destroy'])->name('akunrt.delete');
+    Route::post('akunrt/store', [AkunRtController::class, 'store'])->name('akunrt.store');
+    Route::put('akunrt/update/{id}', [AkunRtController::class, 'update'])->name('akunrt.update');
+    Route::delete('akunrt/{id_rtrw}', [AkunRtController::class, 'destroy'])->name('akunrt.delete');
     Route::get('get-nama-by-nik', [AkunRtController::class, 'getNamaByNik']); 
 
     // LANDINGPAGE
