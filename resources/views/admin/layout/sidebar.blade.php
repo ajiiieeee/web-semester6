@@ -50,6 +50,7 @@
       <li><a class="nav-link" href="{{ url('admin/mastersurat') }}"><i class="fas fa-file-alt"></i><span>Master Surat</span></a></li>
       <li><a class="nav-link" href="{{ url('admin/berita') }}"><i class="fas fa-newspaper"></i><span>Berita</span></a></li>
       <li><a class="nav-link" href="{{ url('admin/pengaduan') }}"><i class="fas fa-comment-dots"></i><span>Pengaduan Masyarakat</span></a></li>
+       <li><a class="nav-link" href="{{ url('admin/profile') }}"><i class="fas fa-users"></i><span>Perangkat Desa</span></a></li>
       <li><a class="nav-link" href="{{ url('admin/landingpage') }}"><i class="fas fa-globe"></i><span>Website</span></a></li>
     </ul>
 

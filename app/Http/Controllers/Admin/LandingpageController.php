@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\landing_page;
 use App\Models\master_berita;
+use App\Models\PerangkatDesa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; 
 
@@ -24,9 +25,17 @@ class LandingpageController extends Controller
     public function tampil() {
         $data = landing_page::first();
         $beritas = master_berita::all();
+    
+         $kepalaDesa = PerangkatDesa::where('is_kepala', 1)->first();
+         $perangkat = PerangkatDesa::where('is_kepala', 0)->get();
 
-        return view('landingpage.index', compact('data', 'beritas'));
 
+           return view('landingpage.index', compact(
+        'data',
+        'beritas',
+        'kepalaDesa',
+        'perangkat'
+    ));
 }
 
     public function update(Request $request)

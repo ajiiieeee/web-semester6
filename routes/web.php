@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\SuratController;
 use App\Http\Controllers\Admin\SuratDitolakController;
 use App\Http\Controllers\Admin\SuratMasukController;
 use App\Http\Controllers\Admin\SuratSelesaiController;
+use App\Http\Controllers\Admin\ProfileController;
 
 
 // RW
@@ -169,6 +170,11 @@ Route::middleware(['auth', 'role:1'])->prefix('admin')->group(function () {
     Route::put('/mastersurat/update/{id}', [SuratController::class, 'update'])->name('mastersurat.update');
     Route::delete('/mastersurat/delete/{id}', [SuratController::class, 'destroy'])->name('mastersurat.destroy');
     Route::get('suratmasuk/{id}/cetak', [GeneratePDFController::class, 'generateAndStorePdf']);
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile.index');
+    Route::post('/profile', [ProfileController::class, 'store'])->name('admin.profile.store');
+    Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('admin.profile.update');
+    Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('admin.profile.destroy');
 
     // MASTER PENGADUAN
     Route::get('pengaduan', [PengaduanController::class, 'index'])->name('master-pengaduan.index');

@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Village</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/navbar.css') }}"> --}}
 
 </head>     
 
@@ -16,10 +16,10 @@
         <section class="header-section">
     <div class="container">
         <div class="row">
-           <div class="col-lg-6 d-flex align-items-center justify-content-between">
+         <div class="col-lg-6 d-flex align-items-center">
     <div class="logo-container d-flex align-items-center">
-        <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo Desa" class="logo-img">
-        <div class="logo-text ms-3">
+        <img src="{{ asset('image/logo/logo.png') }}" alt="Logo Desa" class="logo-img">
+        <div class="logo-text">
             <h4 class="mb-0">Desa Wonorejo</h4>
             <small>Kabupaten Lumajang</small>
         </div>
@@ -198,87 +198,31 @@
         </div>
     </section>
     
-    <section class="profile-section" id="profile-section">
-        <h2>Perangkat Desa</h2>
-        <p>Perangkat Desa Wonorejo periode tahun 2025–2029</p>
-      
-        {{-- Kepala Desa --}}
-        <div class="kepala-desa">
-          <div class="card">
-            <img src="{{ asset('image/profile/kepaladesa.jpg') }}" alt="Kepala Desa">
-            <h4>Supriyono.</h4>
-            <p>Kepala Desa Kalipait 2025–2029</p>
-          </div>
+   <section class="profile-section" id="profile-section">
+    <h2>Perangkat Desa</h2>
+
+    {{-- Kepala Desa --}}
+    @if($kepalaDesa)
+    <div class="kepala-desa">
+        <div class="card">
+            <img src="{{ asset('storage/'.$kepalaDesa->foto) }}">
+            <h4>{{ $kepalaDesa->nama }}</h4>
+            <p>{{ $kepalaDesa->jabatan }}</p>
         </div>
-      
-        {{-- 8 perangkat lain --}}
-        <div class="container perangkat-desa">
-          <div class="card">
-            <img src="{{ asset('image/profile/ADI.jpg') }}" alt="Wakil">
-            <h4>Adi Jatman,S.H</h4>
-            <p>Kepala Dusun Purworejo  </p>
-          </div>
-          <div class="card">
-            <img src="{{ asset('image/profile/misyadi.jpg') }}" alt="Sekretaris">
-            <h4>Misyadi</h4>
-            <p> Kepala Dusun Kutorejo </p>
-          </div>
-          <div class="card">
-            <img src="{{ asset('image/profile/abal.jpg') }}" alt="Bendahara">
-            <h4>Abal Mudlofar,S.Pd</h4>
-            <p>Sekretaris Desa Wonorejo</p>
-          </div>
-          <div class="card">
-            <img src="{{ asset('image/profile/luluk.jpg') }}" alt="Pemerintahan">
-            <h4>Luluk Uswatun Hasanah</h4>
-            <p>Kepala Seksi Kesejahteraan Rakyat</p>
-          </div>
-          <div class="card">
-            <img src="{{ asset('image/profile/sumarji.jpg') }}" alt="Kesejahteraan">
-            <h4>Sumarji</h4>
-            <p>Kepala Seksi Pemerintahan</p>
-          </div>
-          <div class="card">
-            <img src="{{ asset('image/profile/yustika.jpg') }}" alt="Pelayanan">
-            <h4>Yustika Nova Anggraini</h4>
-            <p>Kepala Urusan Umum</p>
-          </div>
-          <div class="card">
-            <img src="{{ asset('image/profile/melin.jpg') }}" alt="Umum">
-            <h4>Melin Efraini</h4>
-            <p>Kepala Urusan Keuangan</p>
-          </div>
-          <div class="card">
-            <img src="{{ asset('image/profile/abd.jpg') }}" alt="Keuangan">
-            <h4>M. Abdul Ghofur</h4>
-            <p>Kepala Urusan Perencanaan</p>
-          </div>
-        </div>  
-      </section>
-      
-      <section class="berita-section py-5" id="berita-section">
-        <div class="container-berita">
-            <div class="berita-header text-center mb-5">
-                <h2 class="berita-heading">Berita Terkini</h2>
-                <p class="berita-subheading">Berita terbaru tentang Desa Wonorejo dan informasi terkini untuk masyarakat.</p>
-            </div>
-    
-            @if($beritas->count() > 0)
-                <div class="scroll-wrapper-berita">
-                    @foreach($beritas as $berita)
-                        <div class="card-berita d-flex flex-column">
-                            <img src="{{ asset('storage/imageberita/' . $berita->image) }}" alt="{{ $berita->judul }}">
-                            <div class="card-body-berita">
-                                <h5 class="card-title-berita">{{ $berita->judul }}</h5>
-                                <p class="card-text-berita">{{ Str::limit(strip_tags($berita->isi), 100, '...') }}</p>
-                                <a href="{{ route('landingpage.show', $berita->id_berita) }}" class="btn-berita" >Baca Selengkapnya</a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
+    </div>
+    @endif
+
+    {{-- Perangkat Desa --}}
+    <div class="container perangkat-desa">
+        @foreach($perangkat as $item)
+        <div class="card">
+            <img src="{{ asset('storage/'.$item->foto) }}">
+            <h4>{{ $item->nama }}</h4>
+            <p>{{ $item->jabatan }}</p>
         </div>
-    </section>
+        @endforeach
+    </div>
+</section>
     
     <footer class="footer-section" id="footer-section">
         <div class="container">

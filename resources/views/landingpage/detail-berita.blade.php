@@ -30,7 +30,7 @@
     <section class="berita-detail">
         <div class="container-berita">
             <div class="card-berita-detail">
-                <img src="{{ asset('storage/imageberita/' . $berita->image) }}" alt="{{ $berita->judul }}">
+                {{-- <img src="{{ asset('storage/imageberita/' . $berita->image) }}" alt="{{ $berita->judul }}"> --}}
                 <div class="card-body-berita-detail">
                     <h2 class="card-title-berita-detail">{{ $berita->judul }}</h2>
                     <small class="penulis-berita">🖊 {{ $berita->penulis->nama_lengkap ?? 'Tidak diketahui' }}</small>
